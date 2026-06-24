@@ -19,6 +19,10 @@ There are two parts:
 2. **Types:** the transition return type also requires the *full* context shape,
    so the partial is a type error (see the `@ts-expect-error` in `src/main.ts`).
 
+Related: a transition that returns a `{ target }` must also include `context`,
+even when it doesn't change context — there's no way to return just
+`{ target: 'b' }`. (Second `@ts-expect-error` in `src/main.ts`.)
+
 ## Run it
 
 ```sh

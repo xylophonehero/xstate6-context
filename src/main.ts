@@ -29,6 +29,33 @@ const machine = setup({
   },
 })
 
+// ---------------------------------------------------------------------------
+// Related type issue: a transition that returns a `{ target }` must ALSO
+// include `context`, even when the transition doesn't change context. There's
+// no way to return just `{ target: 'b' }` — TS requires the full context too.
+// ---------------------------------------------------------------------------
+
+setup({
+  schemas: {
+    context: types<{ a: number; b: number; c: number }>(),
+    events: { go: types<{}>() },
+  },
+}).createMachine({
+  context: { a: 1, b: 2, c: 3 },
+  initial: 'idle',
+  states: {
+    idle: {
+      on: {
+        // @ts-expect-error returning a target without context is a type error,
+        // even though this transition doesn't touch context. Remove this line
+        // to see it; `{ target: 'done', context }` is currently required.
+        go: () => ({ target: 'done' }),
+      },
+    },
+    done: {},
+  },
+})
+
 const actor = createActor(machine).start()
 
 const before = actor.getSnapshot().context
