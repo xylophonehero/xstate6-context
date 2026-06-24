@@ -1,0 +1,21 @@
+{
+  "name": "xstate-v6-partial-context-repro",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "xstate": "6.0.0-alpha.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "vite": "^5.4.0"
+  },
+  "stackblitz": {
+    "startCommand": "npm run dev"
+  }
+}
